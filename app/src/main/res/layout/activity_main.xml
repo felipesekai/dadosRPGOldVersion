@@ -4,7 +4,55 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:layout_margin="16dp">
+
+    <TextView
+        android:id="@+id/dados"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Dados"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txt_dados_inv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Dados"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addQ_menos_dados"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/Quantidade"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Quantidade"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerNumDados" />
+
+    <TextView
+        android:id="@+id/txt_quant_inv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Quantidade"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerNumDados2" />
 
     <TextView
         android:id="@+id/textView"
@@ -13,6 +61,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:text="Resultado"
@@ -24,22 +73,43 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.313" />
+        app:layout_constraintTop_toBottomOf="@+id/dados_quantidade_inv"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Spinner
         android:id="@+id/spinnerNumDados"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dados"
         app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/btn_delete"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="4dp"
+        android:background="@android:drawable/ic_menu_delete"
+        android:visibility="invisible"
+        app:layout_constraintStart_toEndOf="@+id/btn_add"
+        app:layout_constraintTop_toBottomOf="@+id/dados" />
+
+    <Button
+        android:id="@+id/btn_add"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/outline_add_circle_outline_24"
+        app:layout_constraintStart_toEndOf="@+id/spinnerNumDados"
+        app:layout_constraintTop_toBottomOf="@+id/dados" />
 
     <Spinner
         android:id="@+id/spinnerNumDados2"
@@ -50,35 +120,77 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/spinnerNumDados"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerNumDados"
+        app:layout_constraintStart_toStartOf="@+id/txt_dados_inv"
+        app:layout_constraintTop_toBottomOf="@+id/txt_dados_inv"
         app:layout_constraintVertical_bias="0.0" />
 
-    <Spinner
-        android:id="@+id/spinnerNumDados3"
-        android:layout_width="wrap_content"
+    <Button
+        android:id="@+id/btn_add2"
+        android:layout_width="45dp"
         android:layout_height="45dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:background="@drawable/outline_add_circle_outline_24"
         android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/spinnerNumDados2"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerNumDados2"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintStart_toEndOf="@+id/spinnerNumDados2"
+        app:layout_constraintTop_toTopOf="@+id/spinnerNumDados2" />
 
-    <Spinner
-        android:id="@+id/spinnerNumDados4"
-        android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/dados_quantidade_inv"
+        android:layout_width="45dp"
         android:layout_height="45dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:gravity="center"
+        android:inputType="number"
+        android:text="1"
+        android:textSize="24dp"
+        android:textStyle="bold"
         android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/spinnerNumDados3"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerNumDados3"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintStart_toEndOf="@+id/addQ_menos_dados_inv"
+        app:layout_constraintTop_toTopOf="@+id/addQ_menos_dados_inv" />
+
+    <Button
+        android:id="@+id/addQ_mais_dados_inv"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:background="@drawable/outline_add_circle_outline_24"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/dados_quantidade_inv"
+        app:layout_constraintTop_toTopOf="@+id/dados_quantidade_inv" />
+
+    <Button
+        android:id="@+id/addQ_menos_dados_inv"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/outline_remove_circle_outline_24"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@+id/spinnerNumDados2"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/txt_quant_inv"
+        app:layout_constraintTop_toBottomOf="@+id/txt_quant_inv" />
+
+    <Button
+        android:id="@+id/btn_delete2"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:background="@drawable/outline_remove_circle_outline_24"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/btn_add2"
+        app:layout_constraintTop_toTopOf="@+id/btn_add2" />
 
     <Button
         android:id="@+id/btnRolar"
@@ -90,6 +202,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:text="Rolar"
+        android:textAllCaps="false"
         android:textSize="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -142,9 +255,7 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="16dp"
         android:text="Historico"
         android:textSize="16dp"
         android:textStyle="bold"
@@ -157,7 +268,7 @@
 
     <TextView
         android:id="@+id/txt_listaHistorico"
-        android:layout_width="385dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
         android:textSize="20sp"
@@ -170,120 +281,22 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <Button
-        android:id="@+id/btn_add"
+        android:id="@+id/addQ_menos_dados"
         android:layout_width="45dp"
         android:layout_height="45dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/outline_add_circle_outline_24"
-        app:layout_constraintStart_toEndOf="@+id/spinnerNumDados"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/btn_add2"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
         android:layout_marginTop="4dp"
-        android:background="@android:drawable/ic_menu_add"
-        android:visibility="invisible"
-        app:layout_constraintStart_toEndOf="@+id/spinnerNumDados2"
-        app:layout_constraintTop_toBottomOf="@+id/btn_add" />
-
-    <Button
-        android:id="@+id/btn_add3"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="4dp"
-        android:background="@android:drawable/ic_menu_add"
-        android:visibility="invisible"
-        app:layout_constraintStart_toEndOf="@+id/spinnerNumDados"
-        app:layout_constraintTop_toBottomOf="@+id/btn_add2" />
-
-    <Button
-        android:id="@+id/btn_add4"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="4dp"
-        android:background="@android:drawable/ic_menu_add"
-        android:visibility="invisible"
-        app:layout_constraintStart_toEndOf="@+id/spinnerNumDados4"
-        app:layout_constraintTop_toBottomOf="@+id/btn_add3" />
-
-    <Button
-        android:id="@+id/btn_delete"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="16dp"
-        android:background="@android:drawable/ic_menu_delete"
-        android:visibility="invisible"
-        app:layout_constraintStart_toEndOf="@+id/btn_add"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/btn_delete2"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="4dp"
-        android:background="@android:drawable/ic_menu_delete"
-        android:visibility="invisible"
-        app:layout_constraintStart_toEndOf="@+id/btn_add2"
-        app:layout_constraintTop_toBottomOf="@+id/btn_delete" />
-
-    <Button
-        android:id="@+id/btn_delete3"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="4dp"
-        android:background="@android:drawable/ic_menu_delete"
-        android:visibility="invisible"
-        app:layout_constraintStart_toEndOf="@+id/btn_add3"
-        app:layout_constraintTop_toBottomOf="@+id/btn_delete2" />
-
-    <Button
-        android:id="@+id/btn_delete4"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="4dp"
-        android:background="@android:drawable/ic_menu_delete"
-        android:visibility="invisible"
-        app:layout_constraintStart_toEndOf="@+id/btn_add4"
-        app:layout_constraintTop_toBottomOf="@+id/btn_delete3" />
-
-    <Button
-        android:id="@+id/addQ_mais_dados"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginRight="8dp"
-        android:background="@drawable/outline_add_circle_outline_24"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/dados_quantidade"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:background="@drawable/outline_remove_circle_outline_24"
+        app:layout_constraintEnd_toEndOf="@+id/spinnerNumDados"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/Quantidade"
+        app:layout_constraintTop_toBottomOf="@+id/Quantidade" />
 
     <TextView
         android:id="@+id/dados_quantidade"
-        android:layout_width="wrap_content"
+        android:layout_width="45dp"
         android:layout_height="45dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="16dp"
         android:gravity="center"
         android:inputType="number"
         android:text="1"
@@ -291,140 +304,19 @@
         android:textStyle="bold"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toEndOf="@+id/addQ_menos_dados"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/addQ_menos_dados" />
 
     <Button
-        android:id="@+id/addQ_menos_dados"
+        android:id="@+id/addQ_mais_dados"
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/outline_remove_circle_outline_24"
+        android:layout_marginRight="8dp"
+        android:background="@drawable/outline_add_circle_outline_24"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btn_delete"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/dados_quantidade"
+        app:layout_constraintTop_toTopOf="@+id/dados_quantidade" />
 
-    <TextView
-        android:id="@+id/dados_quantidade2"
-        android:layout_width="wrap_content"
-        android:layout_height="45dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="4dp"
-        android:gravity="center"
-        android:inputType="number"
-        android:text="1"
-        android:textSize="24dp"
-        android:textStyle="bold"
-        android:visibility="invisible"
-        app:layout_constraintStart_toEndOf="@+id/addQ_menos_dados2"
-        app:layout_constraintTop_toBottomOf="@+id/dados_quantidade" />
-
-    <Button
-        android:id="@+id/addQ_mais_dados2"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="4dp"
-        android:background="@android:drawable/ic_input_add"
-        android:visibility="invisible"
-        app:layout_constraintStart_toEndOf="@+id/dados_quantidade2"
-        app:layout_constraintTop_toBottomOf="@+id/addQ_mais_dados" />
-
-    <Button
-        android:id="@+id/addQ_menos_dados2"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="4dp"
-        android:background="@android:drawable/ic_delete"
-        android:visibility="invisible"
-        app:layout_constraintStart_toEndOf="@+id/btn_delete2"
-        app:layout_constraintTop_toBottomOf="@+id/addQ_menos_dados" />
-
-    <TextView
-        android:id="@+id/dados_quantidade3"
-        android:layout_width="wrap_content"
-        android:layout_height="45dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="4dp"
-        android:gravity="center"
-        android:inputType="number"
-        android:text="1"
-        android:textSize="24dp"
-        android:textStyle="bold"
-        android:visibility="invisible"
-        app:layout_constraintStart_toEndOf="@+id/addQ_menos_dados3"
-        app:layout_constraintTop_toBottomOf="@+id/dados_quantidade2" />
-
-    <Button
-        android:id="@+id/addQ_menos_dados3"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="4dp"
-        android:background="@android:drawable/ic_delete"
-        android:visibility="invisible"
-        app:layout_constraintStart_toEndOf="@+id/btn_delete3"
-        app:layout_constraintTop_toBottomOf="@+id/addQ_menos_dados2" />
-
-    <Button
-        android:id="@+id/addQ_mais_dados3"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="4dp"
-        android:background="@android:drawable/ic_input_add"
-        android:visibility="invisible"
-        app:layout_constraintStart_toEndOf="@+id/dados_quantidade3"
-        app:layout_constraintTop_toBottomOf="@+id/addQ_mais_dados2" />
-
-
-    <TextView
-        android:id="@+id/dados_quantidade4"
-        android:layout_width="wrap_content"
-        android:layout_height="45dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="4dp"
-        android:gravity="center"
-        android:inputType="number"
-        android:text="1"
-        android:textSize="24dp"
-        android:textStyle="bold"
-        android:visibility="invisible"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/addQ_menos_dados4"
-        app:layout_constraintTop_toBottomOf="@+id/dados_quantidade3" />
-
-    <Button
-        android:id="@+id/addQ_mais_dados4"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="4dp"
-        android:background="@android:drawable/ic_input_add"
-        android:visibility="invisible"
-        app:layout_constraintStart_toEndOf="@+id/dados_quantidade4"
-        app:layout_constraintTop_toBottomOf="@+id/addQ_mais_dados3" />
-
-    <Button
-        android:id="@+id/addQ_menos_dados4"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="4dp"
-        android:background="@android:drawable/ic_delete"
-        android:visibility="invisible"
-        app:layout_constraintStart_toEndOf="@+id/btn_delete4"
-        app:layout_constraintTop_toBottomOf="@+id/addQ_menos_dados3" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,6 +9,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainViewModel : ViewModel() {
     //mvalor quantidade de dados
     var mValor = MutableLiveData<Int>().apply { value = 1 }
+    var mValor2 = MutableLiveData<Int>().apply { value = 1 }
     //dados multiplos
     var cont = MutableLiveData<Int>().apply { value = 1 }
 

@@ -22,18 +22,17 @@ class MainActivity : AppCompatActivity() {
     var helperDB = HelperDB(this)
     var valor: Int = 6
     var valor2: Int = 6
-    var valor3: Int = 6
-    var valor4: Int = 6
-    var numDados = arrayListOf(6, 4, 8, 10, 12, 20, 100)
+    val numDados = arrayListOf(6, 4, 8, 10, 12, 20, 100)
+    val numDadosString = arrayListOf("D6", "D4", "D8", "D10", "D12", "D20", "D100")
     var listaHistorico = arrayListOf<Historico>()
-    lateinit var adapter: ArrayAdapter<Int>
+    lateinit var adapter: ArrayAdapter<String>
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        adapter = ArrayAdapter(this, R.layout.dropdown_spinner_meu, numDados)
+        adapter = ArrayAdapter(this, R.layout.dropdown_spinner_meu, numDadosString)
         init()
         initOnClick()
 
@@ -47,24 +46,24 @@ class MainActivity : AppCompatActivity() {
             var historico: Historico? = null
 
             if (mViewModel.cont.value == 1) {
-                var  listaRestultado = multiplosDados(valor)
-                    edtResultado_total.text = resultadoTotal(listaRestultado as ArrayList<Int>).toString()
-                    resultado.setText("D$valor:${stringResultados(listaRestultado as ArrayList<Int>)}")
-                    historico = Historico(resultado.text.toString())
 
+                var listaRestultado =
+                    mViewModel.mValor.value?.let { it1 -> multiplosDados(valor, it1) }
+                edtResultado_total.text =
+                    resultadoTotal(listaRestultado as ArrayList<Int>).toString()
+                resultado.setText("D$valor:${stringResultados(listaRestultado as ArrayList<Int>)}")
+                historico = Historico(resultado.text.toString())
 
 
             } else if (mViewModel.cont.value == 2) {
-//                resultado.setText("D$valor:$rolarDado, D$valor2:$rolarDado2")
-//                historico = Historico(resultado.text.toString())
+                var listaRestultado = mViewModel.mValor.value?.let { it1 -> multiplosDados(valor, it1) }
+                var listaRestultado2 = mViewModel.mValor2.value?.let { it1 -> multiplosDados(valor2, it1) }
+                var total = resultadoTotal(listaRestultado as ArrayList<Int>)+resultadoTotal(listaRestultado2 as ArrayList<Int>)
+                edtResultado_total.text = total.toString()
+                resultado.setText("D$valor:${stringResultados(listaRestultado as ArrayList<Int>)} \n" +
+                        "D$valor2:${stringResultados(listaRestultado2 as ArrayList<Int>)}")
+                historico = Historico(resultado.text.toString())
 
-            } else if (mViewModel.cont.value == 3) {
-//                resultado.setText("D$valor:$rolarDado, D$valor2:$rolarDado2, D$valor3:$rolarDado3")
-//                historico = Historico(resultado.text.toString())
-
-            } else if (mViewModel.cont.value == 4) {
-//                resultado.setText("D$valor:$rolarDado, D$valor2:$rolarDado2, D$valor3:$rolarDado3, D$valor4:$rolarDado4")
-//                historico = Historico(resultado.text.toString())
             }
 
             try {
@@ -89,54 +88,38 @@ class MainActivity : AppCompatActivity() {
             btn_add2.visibility = View.INVISIBLE
             btn_delete2.visibility = View.INVISIBLE
             spinnerNumDados2.visibility = View.INVISIBLE
+            txt_dados_inv.visibility = View.INVISIBLE
+            txt_quant_inv.visibility = View.INVISIBLE
+            addQ_mais_dados_inv.visibility = View.INVISIBLE
+            addQ_menos_dados_inv.visibility = View.INVISIBLE
+            dados_quantidade_inv.visibility = View.INVISIBLE
         }
         btn_add2.setOnClickListener {
-            tresDados()
+
         }
-        btn_delete3.setOnClickListener {
-            mViewModel.cont.value = mViewModel.cont.value?.minus(1)
-            //setbotoes visiveis
-            btn_add2.visibility = View.VISIBLE
-            btn_delete2.visibility = View.VISIBLE
-            spinnerNumDados2.visibility = View.VISIBLE
-            //setbotoes invisiveis
-            btn_add3.visibility = View.INVISIBLE
-            btn_delete3.visibility = View.INVISIBLE
-            spinnerNumDados3.visibility = View.INVISIBLE
-        }
-        btn_add3.setOnClickListener {
-            quatroDados()
-        }
-        btn_delete4.setOnClickListener {
-            mViewModel.cont.value = mViewModel.cont.value?.minus(1)
-            //setbotoes visiveis
-            btn_add3.visibility = View.VISIBLE
-            btn_delete3.visibility = View.VISIBLE
-            spinnerNumDados3.visibility = View.VISIBLE
-            //setbotoes invisiveis
-            btn_add4.visibility = View.INVISIBLE
-            btn_delete4.visibility = View.INVISIBLE
-            spinnerNumDados4.visibility = View.INVISIBLE
-        }
-        btn_add4.setOnClickListener {
-            val builder = AlertDialog.Builder(this )
-                builder.setTitle("Desculpa!!")
-                builder.setMessage("No momento nosso app só suporta o maximo de 4 dados")
-                builder.setNegativeButton("Fechar"){dialog, witch ->    }
-            val dialog : AlertDialog = builder.create()
-            dialog.show()
-        }
+
 
         addQ_mais_dados.setOnClickListener {
             mViewModel.mValor.value = mViewModel.mValor.value?.plus(1)
-            dados_quantidade.text =  mViewModel.mValor.value.toString()
+            dados_quantidade.text = mViewModel.mValor.value.toString()
         }
         addQ_menos_dados.setOnClickListener {
             mViewModel.mValor.value = mViewModel.mValor.value?.minus(1)
-            if (mViewModel.mValor.value!! < 1){
+            if (mViewModel.mValor.value!! < 1) {
                 mViewModel.mValor.value = 1
             }
-            dados_quantidade.text =  mViewModel.mValor.value.toString()
+            dados_quantidade.text = mViewModel.mValor.value.toString()
+        }
+        addQ_mais_dados_inv.setOnClickListener {
+            mViewModel.mValor2.value = mViewModel.mValor2.value?.plus(1)
+            dados_quantidade_inv.text = mViewModel.mValor2.value.toString()
+        }
+        addQ_menos_dados_inv.setOnClickListener {
+            mViewModel.mValor2.value = mViewModel.mValor2.value?.minus(1)
+            if (mViewModel.mValor2.value!! < 1) {
+                mViewModel.mValor2.value = 1
+            }
+            dados_quantidade_inv.text = mViewModel.mValor2.value.toString()
         }
 
     }
@@ -182,8 +165,14 @@ class MainActivity : AppCompatActivity() {
         mViewModel.cont.value = 2
         spinnerNumDados2.visibility = View.VISIBLE
         btn_add.visibility = View.INVISIBLE
+
         btn_add2.visibility = View.VISIBLE
         btn_delete2.visibility = View.VISIBLE
+        txt_dados_inv.visibility = View.VISIBLE
+        txt_quant_inv.visibility = View.VISIBLE
+        addQ_mais_dados_inv.visibility = View.VISIBLE
+        addQ_menos_dados_inv.visibility = View.VISIBLE
+        dados_quantidade_inv.visibility = View.VISIBLE
 
         spinnerNumDados2.adapter = adapter
         spinnerNumDados2.onItemSelectedListener = object :
@@ -224,74 +213,9 @@ class MainActivity : AppCompatActivity() {
 
         if (mViewModel.cont.value == 2) {
             doisDados()
-        } else if (mViewModel.cont.value == 3) {
-            tresDados()
-        } else if (mViewModel.cont.value == 4) {
-            quatroDados()
         }
     }
 
-    private fun tresDados() {
-        doisDados()
-        mViewModel.cont.value = 3
-        spinnerNumDados3.visibility = View.VISIBLE
-        spinnerNumDados3.adapter = adapter
-        btn_add2.visibility = View.INVISIBLE
-        btn_delete2.visibility = View.INVISIBLE
-        btn_add3.visibility = View.VISIBLE
-        btn_delete3.visibility = View.VISIBLE
-
-        spinnerNumDados3.onItemSelectedListener = object :
-
-            AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                valor3 = numDados.get(position)
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                TODO("Not yet implemented")
-            }
-
-        }
-    }
-
-    private fun quatroDados() {
-        tresDados()
-        mViewModel.cont.value = 4
-
-        //nao visivel
-        btn_add3.visibility = View.INVISIBLE
-        btn_delete3.visibility = View.INVISIBLE
-        //visivel
-        btn_add4.visibility = View.VISIBLE
-        btn_delete4.visibility = View.VISIBLE
-        spinnerNumDados4.visibility = View.VISIBLE
-        spinnerNumDados4.adapter = adapter
-
-        spinnerNumDados4.onItemSelectedListener = object :
-
-            AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                valor4 = numDados.get(position)
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                TODO("Not yet implemented")
-            }
-
-        }
-
-    }
 
     override fun onRestart() {
         super.onRestart()
@@ -299,21 +223,21 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun multiplosDados(valorDoDado: Int): MutableList<Int> {
+    private fun multiplosDados(valorDoDado: Int, mValor:Int): MutableList<Int> {
 
         var rolarDado = Random.nextInt(1, valorDoDado + 1)
-        var arrayDados : MutableList<Int> = arrayListOf()
-        var num = mViewModel.mValor.value?.minus(1)
+        var arrayDados: MutableList<Int> = arrayListOf()
+        var num = mValor.minus(1)
 
-        for (i in 0..num!!){
-        arrayDados.add(rolarDado)
+        for (i in 0..num) {
+            arrayDados.add(rolarDado)
             rolarDado = Random.nextInt(1, valorDoDado + 1)
 
         }
         return arrayDados
     }
 
-    private fun stringResultados(lista: ArrayList<Int>): String{
+    private fun stringResultados(lista: ArrayList<Int>): String {
         var resultado = ""
         lista.forEach { i ->
             resultado += "$i, "
@@ -321,7 +245,8 @@ class MainActivity : AppCompatActivity() {
         }
         return resultado
     }
-    private fun resultadoTotal(lista: ArrayList<Int>): Int{
+
+    private fun resultadoTotal(lista: ArrayList<Int>): Int {
         var total = 0
         lista.forEach { i ->
             total += i
