@@ -5,11 +5,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.*
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
 import com.sekai.dadosrpg.DataBase.helper.HelperDB
 import com.sekai.dadosrpg.Historico.Historico
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.drawer_navigation_layout.*
 import kotlin.random.Random
 
 
@@ -28,17 +31,30 @@ class MainActivity : AppCompatActivity() {
     lateinit var adapter: ArrayAdapter<String>
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.drawer_navigation_layout)
         adapter = ArrayAdapter(this, R.layout.dropdown_spinner_meu, numDadosString)
         init()
         initOnClick()
+        initDrawer()
 
     }
 
+    private fun initDrawer(){
+        val drawer = drawer_layout
+        val toolbar : Toolbar = toolbar_app as Toolbar
 
+        setSupportActionBar(toolbar)
+        val toggle = ActionBarDrawerToggle(this,drawer,
+            toolbar,
+            R.string.open_navigation,
+            R.string.close_navigation)
+        drawer.addDrawerListener(toggle)
+        toggle.syncState()
+    }
     private fun initOnClick() {
         btnRolar.setOnClickListener {
 
@@ -60,8 +76,8 @@ class MainActivity : AppCompatActivity() {
                 var listaRestultado2 = mViewModel.mValor2.value?.let { it1 -> multiplosDados(valor2, it1) }
                 var total = resultadoTotal(listaRestultado as ArrayList<Int>)+resultadoTotal(listaRestultado2 as ArrayList<Int>)
                 edtResultado_total.text = total.toString()
-                resultado.setText("D$valor:${stringResultados(listaRestultado as ArrayList<Int>)} \n" +
-                        "D$valor2:${stringResultados(listaRestultado2 as ArrayList<Int>)}")
+                resultado.setText("D$valor:${stringResultados(listaRestultado )} \n" +
+                        "D$valor2:${stringResultados(listaRestultado2)}")
                 historico = Historico(resultado.text.toString())
 
             }
@@ -225,16 +241,26 @@ class MainActivity : AppCompatActivity() {
 
     private fun multiplosDados(valorDoDado: Int, mValor:Int): MutableList<Int> {
 
-        var rolarDado = Random.nextInt(1, valorDoDado + 1)
+        var rolarDado = roll(valorDoDado)
         var arrayDados: MutableList<Int> = arrayListOf()
         var num = mValor.minus(1)
 
         for (i in 0..num) {
             arrayDados.add(rolarDado)
-            rolarDado = Random.nextInt(1, valorDoDado + 1)
+            rolarDado = roll(valorDoDado)
 
         }
         return arrayDados
+    }
+
+    private fun roll(dado: Int): Int {
+        var dado = Random.nextInt(1, dado + 1)
+
+//        for (i in 0..2){
+//            dado = Random.nextInt(1,(dado+1))
+//        }
+
+        return dado
     }
 
     private fun stringResultados(lista: ArrayList<Int>): String {
