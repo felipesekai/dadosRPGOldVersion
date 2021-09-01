@@ -3,14 +3,11 @@ package com.sekai.dadosrpg
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
 import com.sekai.dadosrpg.DataBase.helper.HelperDB
 import com.sekai.dadosrpg.DataBase.helper.aplication.ApplicationDb
@@ -18,6 +15,7 @@ import com.sekai.dadosrpg.Historico.Historico
 import com.sekai.dadosrpg.Historico.HistoricoActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.drawer_navigation_layout.*
+import kotlinx.android.synthetic.main.drawer_navigation_layout.view.*
 import kotlin.random.Random
 
 
@@ -36,7 +34,6 @@ class MainActivity : AppCompatActivity() {
     lateinit var adapter: ArrayAdapter<String>
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -48,40 +45,46 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun clickMenu(){
+    private fun clickMenu() {
 
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        val menuDraw = menuInflater
-        menuDraw.inflate(R.menu.nav_drawer_menu, menu)
-        return true
+
+
+    private fun initDrawer() {
+        val drawer = drawer_layout
+        val toolbar: Toolbar = toolbar_app as Toolbar
+        navigationItemSelectedListener(drawer)
+        setSupportActionBar(toolbar)
+        val toggle = ActionBarDrawerToggle(
+            this, drawer,
+            toolbar,
+            R.string.open_navigation,
+            R.string.close_navigation
+        )
+        drawer.addDrawerListener(toggle)
+        toggle.syncState()
     }
 
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return  when(item.itemId){
-            R.id.nav_historico->{
-                startActivity(Intent(this, HistoricoActivity::class.java))
-            return true
-            }else -> return super.onOptionsItemSelected(item)
+    private fun navigationItemSelectedListener(navigation: DrawerLayout) {
+        navigation.nav_view.setNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.nav_historico -> {
+                    startActivity(Intent(this, HistoricoActivity::class.java))
+                    return@setNavigationItemSelectedListener true
+                }
+                R.id.nav_dados -> {
+                    navigation.closeDrawers()
+//                    startActivity(Intent(this, MainActivity::class.java))
+                    return@setNavigationItemSelectedListener false
+                }
+                else -> {
+                    return@setNavigationItemSelectedListener false
+                }
+            }
         }
     }
 
-    private fun initDrawer(){
-        val drawer = drawer_layout
-        val toolbar : Toolbar = toolbar_app as Toolbar
-
-        setSupportActionBar(toolbar)
-        val toggle = ActionBarDrawerToggle(this,drawer,
-            toolbar,
-            R.string.open_navigation,
-            R.string.close_navigation)
-        drawer.addDrawerListener(toggle)
-        toggle.syncState()
-
-
-    }
     private fun initOnClick() {
         btnRolar.setOnClickListener {
 
@@ -90,21 +93,23 @@ class MainActivity : AppCompatActivity() {
 
             if (mViewModel.cont.value == 1) {
 
-                var listaRestultado =
+                val listaRestultado =
                     mViewModel.mValor.value?.let { it1 -> multiplosDados(valor, it1) }
                 edtResultado_total.text =
                     resultadoTotal(listaRestultado as ArrayList<Int>).toString()
-                resultado.setText("D$valor:${stringResultados(listaRestultado as ArrayList<Int>)}")
+                resultado.text = ("D$valor:${stringResultados(listaRestultado)}")
                 historico = Historico(resultado.text.toString())
 
 
             } else if (mViewModel.cont.value == 2) {
-                var listaRestultado = mViewModel.mValor.value?.let { it1 -> multiplosDados(valor, it1) }
-                var listaRestultado2 = mViewModel.mValor2.value?.let { it1 -> multiplosDados(valor2, it1) }
-                var total = resultadoTotal(listaRestultado as ArrayList<Int>)+
+                val listaRestultado =
+                    mViewModel.mValor.value?.let { it1 -> multiplosDados(valor, it1) }
+                val listaRestultado2 =
+                    mViewModel.mValor2.value?.let { it1 -> multiplosDados(valor2, it1) }
+                val total = resultadoTotal(listaRestultado as ArrayList<Int>) +
                         resultadoTotal(listaRestultado2 as ArrayList<Int>)
                 edtResultado_total.text = total.toString()
-                resultado.text = ("D$valor:${stringResultados(listaRestultado )} \n" +
+                resultado.text = ("D$valor:${stringResultados(listaRestultado)} \n" +
                         "D$valor2:${stringResultados(listaRestultado2)}")
                 historico = Historico(resultado.text.toString())
 
@@ -268,11 +273,11 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun multiplosDados(valorDoDado: Int, mValor:Int): MutableList<Int> {
+    private fun multiplosDados(valorDoDado: Int, mValor: Int): MutableList<Int> {
 
         var rolarDado = roll(valorDoDado)
-        var arrayDados: MutableList<Int> = arrayListOf()
-        var num = mValor.minus(1)
+        val arrayDados: MutableList<Int> = arrayListOf()
+        val num = mValor.minus(1)
 
         for (i in 0..num) {
             arrayDados.add(rolarDado)
@@ -283,13 +288,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun roll(dado: Int): Int {
-        var dado = Random.nextInt(1, dado + 1)
 
 //        for (i in 0..2){
 //            dado = Random.nextInt(1,(dado+1))
 //        }
 
-        return dado
+        return Random.nextInt(1, dado + 1)
     }
 
     private fun stringResultados(lista: ArrayList<Int>): String {

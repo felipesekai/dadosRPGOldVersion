@@ -21,12 +21,12 @@ class HistoricoAdapter(
 
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoricoAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = CardHistoricoBinding.inflate(LayoutInflater.from(parent.context), parent, false)
       return ViewHolder(binding.root)
     }
 
-    override fun onBindViewHolder(holder: HistoricoAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
        holder.apply {
            historico.text = listH[position].historico
        }

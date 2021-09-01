@@ -3,4 +3,5 @@
     <string name="open_navigation">Abrir</string>
     <string name="close_navigation">Fechar</string>
     <string name="historico_title">Historico</string>
+    <string name="option_menu_limpar_hist_rico">Limpar Histórico</string>
 </resources>

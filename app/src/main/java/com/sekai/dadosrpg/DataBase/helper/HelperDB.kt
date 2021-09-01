@@ -39,13 +39,13 @@ class HelperDB(context : Context?,
     }
 
     fun exibirHisorico(): List<Historico>{
-        var lista = mutableListOf<Historico>()
+        val lista = mutableListOf<Historico>()
         val db = readableDatabase?: return mutableListOf()
-        val sql = "SELECT * FROM $TABLE_NAME ORDER BY $COLUMN_ID DESC LIMIT 10"
-        var cursor = db.rawQuery(sql, arrayOf())
+        val sql = "SELECT * FROM $TABLE_NAME ORDER BY $COLUMN_ID DESC LIMIT 100"
+        val cursor = db.rawQuery(sql, arrayOf())
 
         while (cursor.moveToNext()){
-            var historico = Historico(
+            val historico = Historico(
             cursor.getString(cursor.getColumnIndex(COLUMN_HISORICO))
             )
            lista.add(historico)
@@ -64,6 +64,12 @@ class HelperDB(context : Context?,
         db.insert(TABLE_NAME,null,content)
         db.close()
 
+    }
+
+    fun deleteAll(){
+        val db = writableDatabase?: return
+        val sql = "DELETE FROM $TABLE_NAME"
+        db.execSQL(sql)
     }
 
 }
