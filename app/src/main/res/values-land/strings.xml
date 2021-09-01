@@ -2,4 +2,5 @@
 <resources>
     <string name="open_navigation">Abrir</string>
     <string name="close_navigation">Fechar</string>
+    <string name="historico_title">Historico</string>
 </resources>

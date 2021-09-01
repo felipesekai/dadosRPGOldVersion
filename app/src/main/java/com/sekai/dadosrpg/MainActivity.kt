@@ -3,6 +3,9 @@ package com.sekai.dadosrpg
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -10,7 +13,9 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
 import com.sekai.dadosrpg.DataBase.helper.HelperDB
+import com.sekai.dadosrpg.DataBase.helper.aplication.ApplicationDb
 import com.sekai.dadosrpg.Historico.Historico
+import com.sekai.dadosrpg.Historico.HistoricoActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.drawer_navigation_layout.*
 import kotlin.random.Random
@@ -43,6 +48,26 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    private fun clickMenu(){
+
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val menuDraw = menuInflater
+        menuDraw.inflate(R.menu.nav_drawer_menu, menu)
+        return true
+    }
+
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return  when(item.itemId){
+            R.id.nav_historico->{
+                startActivity(Intent(this, HistoricoActivity::class.java))
+            return true
+            }else -> return super.onOptionsItemSelected(item)
+        }
+    }
+
     private fun initDrawer(){
         val drawer = drawer_layout
         val toolbar : Toolbar = toolbar_app as Toolbar
@@ -54,6 +79,8 @@ class MainActivity : AppCompatActivity() {
             R.string.close_navigation)
         drawer.addDrawerListener(toggle)
         toggle.syncState()
+
+
     }
     private fun initOnClick() {
         btnRolar.setOnClickListener {
@@ -74,9 +101,10 @@ class MainActivity : AppCompatActivity() {
             } else if (mViewModel.cont.value == 2) {
                 var listaRestultado = mViewModel.mValor.value?.let { it1 -> multiplosDados(valor, it1) }
                 var listaRestultado2 = mViewModel.mValor2.value?.let { it1 -> multiplosDados(valor2, it1) }
-                var total = resultadoTotal(listaRestultado as ArrayList<Int>)+resultadoTotal(listaRestultado2 as ArrayList<Int>)
+                var total = resultadoTotal(listaRestultado as ArrayList<Int>)+
+                        resultadoTotal(listaRestultado2 as ArrayList<Int>)
                 edtResultado_total.text = total.toString()
-                resultado.setText("D$valor:${stringResultados(listaRestultado )} \n" +
+                resultado.text = ("D$valor:${stringResultados(listaRestultado )} \n" +
                         "D$valor2:${stringResultados(listaRestultado2)}")
                 historico = Historico(resultado.text.toString())
 
@@ -84,7 +112,8 @@ class MainActivity : AppCompatActivity() {
 
             try {
                 if (historico != null) {
-                    helperDB.insertNoDB(historico)
+                    ApplicationDb.instancia.helperDB(this).insertNoDB(historico)
+//                    helperDB.insertNoDB(historico)
                 }
             } catch (ex: Exception) {
                 ex.printStackTrace()

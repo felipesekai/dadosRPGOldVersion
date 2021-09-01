@@ -1,22 +1,24 @@
 package com.sekai.dadosrpg.DataBase.helper.aplication
 
 import android.app.Application
+import android.content.Context
 import com.sekai.dadosrpg.DataBase.helper.HelperDB
 
 class ApplicationDb : Application(){
 
-    var helperDB : HelperDB? = null
+    private lateinit var helperDB : HelperDB
 
 
     companion object{
-        lateinit var instancia : ApplicationDb
+        val instancia = ApplicationDb()
     }
 
-    override fun onCreate() {
-        super.onCreate()
-        instancia = this
-        helperDB = HelperDB(this)
+    fun helperDB(context : Context): HelperDB {
+        helperDB = HelperDB(context)
+        return helperDB
     }
+
+
 
 
 

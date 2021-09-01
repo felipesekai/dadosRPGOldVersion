@@ -50,6 +50,7 @@ class HelperDB(context : Context?,
             )
            lista.add(historico)
         }
+        cursor.close()
         db.close()
         return lista
         }
