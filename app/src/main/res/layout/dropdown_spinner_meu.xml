@@ -27,4 +27,4 @@
     android:textAlignment="center"
     android:gravity="center"
     android:layout_gravity="end"
-    android:textSize="34dp"/>
+    android:textSize="34sp"/>

@@ -13,6 +13,7 @@ import com.sekai.dadosrpg.DataBase.helper.HelperDB
 import com.sekai.dadosrpg.DataBase.helper.aplication.ApplicationDb
 import com.sekai.dadosrpg.Historico.Historico
 import com.sekai.dadosrpg.Historico.HistoricoActivity
+import com.sekai.dadosrpg.databinding.DrawerNavigationLayoutBinding
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.drawer_navigation_layout.*
 import kotlinx.android.synthetic.main.drawer_navigation_layout.view.*
@@ -32,12 +33,14 @@ class MainActivity : AppCompatActivity() {
     val numDadosString = arrayListOf("D6", "D4", "D8", "D10", "D12", "D20", "D100")
     var listaHistorico = arrayListOf<Historico>()
     lateinit var adapter: ArrayAdapter<String>
+    lateinit var binding : DrawerNavigationLayoutBinding
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.drawer_navigation_layout)
+        binding = DrawerNavigationLayoutBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         adapter = ArrayAdapter(this, R.layout.dropdown_spinner_meu, numDadosString)
         init()
         initOnClick()
@@ -52,7 +55,7 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun initDrawer() {
-        val drawer = drawer_layout
+        val drawer = binding.drawerLayout
         val toolbar: Toolbar = toolbar_app as Toolbar
         navigationItemSelectedListener(drawer)
         setSupportActionBar(toolbar)
